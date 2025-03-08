@@ -10,6 +10,7 @@ import Events from "./pages/Events";
 import PrivateEvents from "./pages/PrivateEvents";
 import SavedEvents from "./pages/SavedEvents";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/private-events" element={<PrivateEvents />} />
             <Route path="/saved" element={<SavedEvents />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
