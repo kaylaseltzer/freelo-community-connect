@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 type Language = 'en' | 'he';
@@ -104,7 +103,7 @@ const translations = {
     'addEvent.address': 'Address',
     'addEvent.addressPlaceholder': 'Enter the full address or meeting point details',
     'addEvent.details': 'Event Details',
-    'addEvent.description': 'Event Description',
+    'addEvent.descriptionField': 'Event Description',
     'addEvent.descriptionPlaceholder': 'Describe your event, what participants can expect, etc.',
     'addEvent.attendeeLimit': 'Attendee Limit',
     'addEvent.accessMode': 'Who can attend?',
@@ -258,6 +257,7 @@ const translations = {
     'addEvent.namePlaceholder': 'הכנס את שם האירוע',
     'addEvent.host': 'שם הלין',
     'addEvent.hostDescription': 'אם ברצונכם שיפרסמו את שם הלין לצד שם האירוע, זה המקום לרשום את השם שתרצו',
+    'addEvent.hostPlaceholder': 'שם המארגן/ת',
     'addEvent.date': 'מתי זה קורה?',
     'addEvent.selectDate': 'בחר תאריך',
     'addEvent.time': 'באיזה שעה?',
@@ -267,7 +267,7 @@ const translations = {
     'addEvent.address': 'כתובת',
     'addEvent.addressPlaceholder': 'הכנס את הכתובת המלאה או פרטי המפגש',
     'addEvent.details': 'פרטי האירוע',
-    'addEvent.description': 'איפה האירוע קורה? (עיר, כתובת, שם מועדון)',
+    'addEvent.descriptionField': 'איפה האירוע קורה? (עיר, כתובת, שם מועדון)',
     'addEvent.descriptionPlaceholder': 'תאר את האירוע שלך, מה המשתתפים יכולים לצפות, וכו\'',
     'addEvent.attendeeLimit': 'גודל האירוע?',
     'addEvent.accessMode': 'מי יכול להגיע לאירוע?',
