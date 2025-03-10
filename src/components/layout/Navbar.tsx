@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageToggle from '@/components/ui/LanguageToggle';
-import { Heart, Menu, X, Home } from 'lucide-react';
+import { Heart, Menu, X, Home, Plus, UserCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -73,16 +73,17 @@ export const Navbar: React.FC = () => {
               <span className="sr-only md:not-sr-only">{t('nav.saved')}</span>
             </Link>
             
-            <div className="flex items-center gap-2 ml-2">
-              <Link to="/login">
-                <Button variant="ghost" className="font-medium">
+            <div className="flex items-center gap-3 ml-2">
+              <Link to="/auth">
+                <Button variant="ghost" className="font-medium flex items-center gap-2">
+                  <UserCircle className="h-5 w-5" />
                   {t('nav.login')}
                 </Button>
               </Link>
               
-              <Link to="/signup">
-                <Button className="bg-gradient-primary hover:shadow-lg transition-all text-white border-none font-medium">
-                  {t('nav.signup')}
+              <Link to="/add-event">
+                <Button className="bg-gradient-primary hover:shadow-lg transition-all text-white border-none font-medium rounded-full p-2 h-10 w-10">
+                  <Plus className="h-5 w-5" />
                 </Button>
               </Link>
             </div>
@@ -137,15 +138,15 @@ export const Navbar: React.FC = () => {
               </Link>
               
               <div className="pt-6 border-t border-border">
-                <Link to="/login" onClick={toggleMenu}>
-                  <Button variant="outline" className="w-full mb-3 font-medium">
-                    {t('nav.login')}
-                  </Button>
+                <Link to="/auth" onClick={toggleMenu} className="flex items-center gap-2 mb-3">
+                  <UserCircle className="h-5 w-5" />
+                  <span>{t('nav.login')}/{t('nav.signup')}</span>
                 </Link>
                 
-                <Link to="/signup" onClick={toggleMenu}>
-                  <Button className="w-full bg-gradient-primary hover:shadow-lg transition-all text-white border-none font-medium">
-                    {t('nav.signup')}
+                <Link to="/add-event" onClick={toggleMenu}>
+                  <Button className="w-full bg-gradient-primary hover:shadow-lg transition-all text-white border-none font-medium flex items-center justify-center gap-2">
+                    <Plus className="h-5 w-5" />
+                    <span>{t('event.add')}</span>
                   </Button>
                 </Link>
               </div>

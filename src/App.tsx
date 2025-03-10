@@ -10,8 +10,8 @@ import Index from "./pages/Index";
 import Events from "./pages/Events";
 import PrivateEvents from "./pages/PrivateEvents";
 import SavedEvents from "./pages/SavedEvents";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Auth from "./pages/Auth";
+import AddEvent from "./pages/AddEvent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,8 +29,8 @@ const App = () => (
               <Route path="/events" element={<Events />} />
               <Route path="/private-events" element={<PrivateEvents />} />
               <Route path="/saved" element={<SavedEvents />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/add-event" element={<AddEvent />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
