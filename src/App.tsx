@@ -12,6 +12,7 @@ import PrivateEvents from "./pages/PrivateEvents";
 import SavedEvents from "./pages/SavedEvents";
 import Auth from "./pages/Auth";
 import AddEvent from "./pages/AddEvent";
+import PublishOptions from "./pages/PublishOptions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
               <Route path="/saved" element={<SavedEvents />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/add-event" element={<AddEvent />} />
+              <Route path="/publish-options" element={<PublishOptions />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
