@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageToggle from '@/components/ui/LanguageToggle';
-import { Heart, Menu, X } from 'lucide-react';
+import { Heart, Menu, X, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -34,7 +34,7 @@ export const Navbar: React.FC = () => {
     <nav 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm dark:bg-freelo-dark/80" : "bg-transparent"
+        isScrolled ? "bg-freelo-dark/80 backdrop-blur-md shadow-sm" : "bg-transparent"
       )}
     >
       <div className="container-custom py-4">
@@ -42,9 +42,9 @@ export const Navbar: React.FC = () => {
           {/* Logo and Site Name */}
           <Link to="/" className="flex items-center gap-2">
             <img 
-              src="/lovable-uploads/91a2d98e-3eaa-4a3c-9253-6f17a7e6acd5.png" 
+              src="/lovable-uploads/ad394f1c-bdab-43c5-b501-2b81989ede17.png" 
               alt="Freelo Logo" 
-              className="h-10 w-10"
+              className="h-12 w-auto"
             />
             <span className="font-heading font-bold text-xl background-clip-text text-transparent bg-gradient-primary">
               {t('app.name')}
@@ -55,8 +55,9 @@ export const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center gap-6">
             <LanguageToggle />
             
-            <Link to="/" className="text-foreground/90 hover:text-freelo-purple font-medium transition-colors">
-              {t('nav.home')}
+            <Link to="/" className="text-foreground/90 hover:text-freelo-purple font-medium transition-colors flex items-center gap-1">
+              <Home className="h-4 w-4" />
+              <span>{t('nav.home')}</span>
             </Link>
             
             <Link to="/events" className="text-foreground/90 hover:text-freelo-purple font-medium transition-colors">
@@ -69,7 +70,7 @@ export const Navbar: React.FC = () => {
             
             <Link to="/saved" className="flex items-center gap-1 text-foreground/90 hover:text-freelo-purple font-medium transition-colors">
               <Heart className="h-4 w-4" />
-              <span>{t('nav.saved')}</span>
+              <span className="sr-only md:not-sr-only">{t('nav.saved')}</span>
             </Link>
             
             <div className="flex items-center gap-2 ml-2">
@@ -99,14 +100,15 @@ export const Navbar: React.FC = () => {
         
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="fixed inset-0 top-16 z-50 bg-background md:hidden animate-fade-in">
+          <div className="fixed inset-0 top-16 z-50 bg-freelo-dark/95 md:hidden animate-fade-in">
             <div className="flex flex-col p-6 space-y-6">
               <Link 
                 to="/" 
-                className="text-lg font-medium"
+                className="text-lg font-medium flex items-center gap-2"
                 onClick={toggleMenu}
               >
-                {t('nav.home')}
+                <Home className="h-5 w-5" />
+                <span>{t('nav.home')}</span>
               </Link>
               
               <Link 

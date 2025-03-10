@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/home/HeroSection';
+import EventSlider from '@/components/home/EventSlider';
+import FeaturedEvents from '@/components/home/FeaturedEvents';
 import UpcomingEvents from '@/components/home/UpcomingEvents';
 import PrivateEvents from '@/components/home/PrivateEvents';
 import RecentEvents from '@/components/home/RecentEvents';
@@ -17,10 +19,12 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-grow pt-16">
         <HeroSection />
+        <EventSlider />
+        <FeaturedEvents />
         <UpcomingEvents />
         <PrivateEvents />
         <RecentEvents />

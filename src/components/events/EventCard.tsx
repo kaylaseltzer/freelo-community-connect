@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CalendarDays, Clock, MapPin, Lock } from 'lucide-react';
+import { CalendarDays, Clock, MapPin, Lock, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface EventProps {
@@ -17,6 +17,7 @@ export interface EventProps {
   categories: string[];
   isPrivate?: boolean;
   isNew?: boolean;
+  isFeatured?: boolean;
 }
 
 export const EventCard: React.FC<EventProps> = ({
@@ -29,19 +30,30 @@ export const EventCard: React.FC<EventProps> = ({
   categories,
   isPrivate = false,
   isNew = false,
+  isFeatured = false,
 }) => {
   const { t } = useLanguage();
 
   return (
     <div 
       className={cn(
-        "rounded-xl overflow-hidden bg-white dark:bg-freelo-dark/60 shadow-md card-hover relative",
-        isPrivate ? "border border-freelo-purple/30" : ""
+        "rounded-xl overflow-hidden bg-gradient-to-b from-freelo-dark/80 to-freelo-dark/60 backdrop-blur-sm shadow-lg card-hover relative border border-freelo-purple/20",
+        isPrivate ? "border-freelo-purple/30" : "",
+        isFeatured ? "ring-2 ring-freelo-red" : ""
       )}
     >
       {isNew && (
         <div className="absolute top-3 right-3 z-10">
           <Badge className="bg-freelo-purple text-white animate-pulse-slow">New</Badge>
+        </div>
+      )}
+      
+      {isFeatured && (
+        <div className="absolute top-3 left-3 z-10">
+          <Badge className="bg-freelo-red text-white flex items-center gap-1">
+            <Star className="h-3 w-3 fill-white" />
+            Featured
+          </Badge>
         </div>
       )}
       
