@@ -20,6 +20,10 @@ const AddEvent: React.FC = () => {
   const { t, language } = useLanguage();
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [loading, setLoading] = useState(false);
+  const [locationType, setLocationType] = useState('club');
+  const [attendeeLimit, setAttendeeLimit] = useState('10');
+  const [accessMode, setAccessMode] = useState('free');
+  const [ageRange, setAgeRange] = useState('no-limit');
   
   const eventTypeOptions = [
     { value: 'fetish', label: t('eventType.fetish') },
@@ -214,16 +218,18 @@ const AddEvent: React.FC = () => {
                   <Label className="text-base">
                     {t('addEvent.locationType')} <span className="text-red-500">*</span>
                   </Label>
-                  <div className="grid grid-cols-2 gap-4">
-                    {locationTypeOptions.map((option) => (
-                      <div key={option.value} className="flex items-center space-x-2">
-                        <RadioGroupItem value={option.value} id={`location-type-${option.value}`} />
-                        <Label htmlFor={`location-type-${option.value}`} className="text-sm font-normal">
-                          {option.label}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
+                  <RadioGroup value={locationType} onValueChange={setLocationType}>
+                    <div className="grid grid-cols-2 gap-4">
+                      {locationTypeOptions.map((option) => (
+                        <div key={option.value} className="flex items-center space-x-2">
+                          <RadioGroupItem value={option.value} id={`location-type-${option.value}`} />
+                          <Label htmlFor={`location-type-${option.value}`} className="text-sm font-normal">
+                            {option.label}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </RadioGroup>
                 </div>
                 
                 <div className="space-y-2">
@@ -245,7 +251,7 @@ const AddEvent: React.FC = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="description" className="text-base">
-                    {t('addEvent.description')} <span className="text-red-500">*</span>
+                    {t('addEvent.descriptionField')} <span className="text-red-500">*</span>
                   </Label>
                   <Textarea
                     id="description"
@@ -260,32 +266,36 @@ const AddEvent: React.FC = () => {
                   <Label className="text-base">
                     {t('addEvent.attendeeLimit')} <span className="text-red-500">*</span>
                   </Label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                    {attendeeLimitOptions.map((option) => (
-                      <div key={option.value} className="flex items-center space-x-2">
-                        <RadioGroupItem value={option.value} id={`attendee-limit-${option.value}`} />
-                        <Label htmlFor={`attendee-limit-${option.value}`} className="text-sm font-normal">
-                          {option.label}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
+                  <RadioGroup value={attendeeLimit} onValueChange={setAttendeeLimit}>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      {attendeeLimitOptions.map((option) => (
+                        <div key={option.value} className="flex items-center space-x-2">
+                          <RadioGroupItem value={option.value} id={`attendee-limit-${option.value}`} />
+                          <Label htmlFor={`attendee-limit-${option.value}`} className="text-sm font-normal">
+                            {option.label}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </RadioGroup>
                 </div>
                 
                 <div className="space-y-2">
                   <Label className="text-base">
                     {t('addEvent.accessMode')} <span className="text-red-500">*</span>
                   </Label>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                    {accessModeOptions.map((option) => (
-                      <div key={option.value} className="flex items-center space-x-2">
-                        <RadioGroupItem value={option.value} id={`access-mode-${option.value}`} />
-                        <Label htmlFor={`access-mode-${option.value}`} className="text-sm font-normal">
-                          {option.label}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
+                  <RadioGroup value={accessMode} onValueChange={setAccessMode}>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                      {accessModeOptions.map((option) => (
+                        <div key={option.value} className="flex items-center space-x-2">
+                          <RadioGroupItem value={option.value} id={`access-mode-${option.value}`} />
+                          <Label htmlFor={`access-mode-${option.value}`} className="text-sm font-normal">
+                            {option.label}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </RadioGroup>
                 </div>
                 
                 <div className="space-y-2">
@@ -324,16 +334,18 @@ const AddEvent: React.FC = () => {
                   <Label className="text-base">
                     {t('addEvent.ageRange')}
                   </Label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                    {ageRangeOptions.map((option) => (
-                      <div key={option.value} className="flex items-center space-x-2">
-                        <RadioGroupItem value={option.value} id={`age-range-${option.value}`} />
-                        <Label htmlFor={`age-range-${option.value}`} className="text-sm font-normal">
-                          {option.label}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
+                  <RadioGroup value={ageRange} onValueChange={setAgeRange}>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {ageRangeOptions.map((option) => (
+                        <div key={option.value} className="flex items-center space-x-2">
+                          <RadioGroupItem value={option.value} id={`age-range-${option.value}`} />
+                          <Label htmlFor={`age-range-${option.value}`} className="text-sm font-normal">
+                            {option.label}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </RadioGroup>
                 </div>
               </div>
               
