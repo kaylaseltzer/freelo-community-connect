@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <img 
-                src="/lovable-uploads/37ccff8b-e56e-4e5e-93d4-aa86f37e370e.png" 
+                src="/lovable-uploads/28ea0588-0f4f-4e6c-b5e8-20c03fdfa9ed.png" 
                 alt="Freelo Logo" 
                 className="h-10 w-10"
               />
