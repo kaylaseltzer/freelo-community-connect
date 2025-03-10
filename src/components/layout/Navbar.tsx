@@ -42,12 +42,12 @@ export const Navbar: React.FC = () => {
           {/* Logo and Site Name */}
           <Link to="/" className="flex items-center gap-2">
             <img 
-              src="/lovable-uploads/ad394f1c-bdab-43c5-b501-2b81989ede17.png" 
+              src="/lovable-uploads/37ccff8b-e56e-4e5e-93d4-aa86f37e370e.png" 
               alt="Freelo Logo" 
-              className="h-12 w-auto"
+              className="h-10"
             />
-            <span className="font-heading font-bold text-xl background-clip-text text-transparent bg-gradient-primary">
-              {t('app.name')}
+            <span className="font-heading font-bold text-xl text-white">
+              Freelo
             </span>
           </Link>
           

@@ -43,7 +43,7 @@ export const HeroSection: React.FC = () => {
           <div className="relative lg:flex justify-center hidden">
             <div className="relative w-[380px] h-[380px] rounded-full bg-gradient-primary blur-[100px] opacity-30 animate-pulse-slow"></div>
             <img 
-              src="/lovable-uploads/ad394f1c-bdab-43c5-b501-2b81989ede17.png" 
+              src="/lovable-uploads/37ccff8b-e56e-4e5e-93d4-aa86f37e370e.png" 
               alt="Freelo Logo" 
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64"
             />

@@ -15,12 +15,12 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <img 
-                src="/lovable-uploads/91a2d98e-3eaa-4a3c-9253-6f17a7e6acd5.png" 
+                src="/lovable-uploads/37ccff8b-e56e-4e5e-93d4-aa86f37e370e.png" 
                 alt="Freelo Logo" 
                 className="h-10 w-10"
               />
-              <span className="font-heading font-bold text-xl background-clip-text text-transparent bg-gradient-primary">
-                {t('app.name')}
+              <span className="font-heading font-bold text-xl text-white">
+                Freelo
               </span>
             </div>
             <p className="text-white/70 mb-4">
