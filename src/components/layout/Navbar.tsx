@@ -105,49 +105,44 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center gap-3 ml-2">
               {session ? (
                 <Popover>
-                  <PopoverTrigger 
-                    asChild 
-                    showOnHover={true} 
-                    className="group"
-                  >
+                  <PopoverTrigger asChild>
                     <Button 
                       variant="ghost" 
-                      className="font-medium p-2 h-10 w-10 rounded-full relative hover:bg-muted/20 group-data-[state=open]:bg-muted/30"
+                      className="font-medium p-2 h-10 w-10 rounded-full relative hover:bg-muted/20"
                       aria-label="User menu"
                     >
                       <UserCircle className="h-5 w-5" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent 
-                    showOnHover={true}
                     className="w-56 p-0 bg-background border border-border shadow-lg rounded-md z-50"
                     align="end"
-                    sideOffset={10}
+                    sideOffset={6}
                   >
                     <div className="flex items-center gap-2 p-3 border-b border-border">
                       <UserCircle className="h-5 w-5 text-muted-foreground" />
                       <span className="text-sm font-medium truncate">{userEmail}</span>
                     </div>
                     <div className="py-1">
-                      <Link to="/profile" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full text-left">
+                      <Link to="/profile" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full">
                         <UserCircle className="h-4 w-4 text-muted-foreground" />
                         <span>Profile</span>
                       </Link>
-                      <Link to="/tickets" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full text-left">
+                      <Link to="/tickets" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full">
                         <Ticket className="h-4 w-4 text-muted-foreground" />
                         <span>Tickets (0)</span>
                       </Link>
-                      <Link to="/saved" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full text-left">
+                      <Link to="/saved" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full">
                         <Heart className="h-4 w-4 text-muted-foreground" />
                         <span>Liked</span>
                       </Link>
                     </div>
                     <div className="py-1 border-t border-border">
-                      <Link to="/account-settings" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full text-left">
+                      <Link to="/account-settings" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full">
                         <Settings className="h-4 w-4 text-muted-foreground" />
                         <span>Account settings</span>
                       </Link>
-                      <Link to="/membership" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full text-left">
+                      <Link to="/membership" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full">
                         <Star className="h-4 w-4 text-muted-foreground" />
                         <span>Membership</span>
                       </Link>
