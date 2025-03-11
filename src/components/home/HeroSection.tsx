@@ -3,7 +3,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
 
 export const HeroSection: React.FC = () => {
   const { t } = useLanguage();
@@ -11,19 +10,25 @@ export const HeroSection: React.FC = () => {
   return (
     <section className="relative min-h-[85vh] flex items-center overflow-hidden">
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-freelo-red/20 via-freelo-purple/15 to-freelo-dark/30 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-freelo-red/30 via-freelo-purple/25 to-freelo-dark/40 z-10"></div>
       
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5OTk5OTkiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptMCAwdjZoNnYtNmgtNnoiLz48L2c+PC9nPjwvc3ZnPg==')] z-0"></div>
+      {/* Hero Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+          alt="Hero Background"
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
       
-      {/* Hero Content */}
-      <div className="container-custom relative z-10 py-20 md:py-32">
+      {/* Content */}
+      <div className="container-custom relative z-20 py-20 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="max-w-2xl animate-fade-up">
+          <div className="max-w-2xl animate-fade-up backdrop-blur-sm bg-black/20 p-8 rounded-2xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-gradient">
               {t('hero.title')}
             </h1>
-            <p className="text-xl mb-8 text-muted-foreground md:w-10/12">
+            <p className="text-xl mb-8 text-white/90 md:w-10/12">
               {t('hero.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -33,15 +38,11 @@ export const HeroSection: React.FC = () => {
                 </Button>
               </Link>
               <Link to="/private-events">
-                <Button variant="outline" className="text-base">
+                <Button variant="outline" className="text-base bg-white/10 hover:bg-white/20 text-white border-white/20">
                   {t('nav.privateEvents')}
                 </Button>
               </Link>
             </div>
-          </div>
-          
-          <div className="relative lg:flex justify-center hidden">
-            <div className="relative w-[380px] h-[380px] rounded-full bg-gradient-primary blur-[100px] opacity-30 animate-pulse-slow"></div>
           </div>
         </div>
       </div>
