@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -35,9 +36,15 @@ const Auth: React.FC = () => {
   
   useEffect(() => {
     const checkSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        navigate('/');
+      try {
+        const { data } = await supabase.auth.getSession();
+        console.log("Current session:", data.session);
+        if (data.session) {
+          console.log("User is already logged in, redirecting to home page");
+          navigate('/');
+        }
+      } catch (error) {
+        console.error("Error checking session:", error);
       }
     };
     
@@ -45,7 +52,9 @@ const Auth: React.FC = () => {
     
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log("Auth state changed:", event, session);
         if (session) {
+          console.log("User authenticated, redirecting to home page");
           navigate('/');
         }
       }
@@ -98,14 +107,17 @@ const Auth: React.FC = () => {
     setLoading(true);
     
     try {
+      console.log("Attempting to sign in with email:", loginData.email);
       const { data, error } = await supabase.auth.signInWithPassword({
         email: loginData.email,
         password: loginData.password,
       });
       
       if (error) {
+        console.error("Login error:", error);
         toast.error(error.message);
       } else {
+        console.log("Login successful:", data);
         toast.success(t('login.success'));
         navigate('/');
       }
@@ -138,6 +150,7 @@ const Auth: React.FC = () => {
     setLoading(true);
     
     try {
+      console.log("Attempting to sign up with email:", signupData.email);
       const { data, error } = await supabase.auth.signUp({
         email: signupData.email,
         password: signupData.password,
@@ -149,8 +162,10 @@ const Auth: React.FC = () => {
       });
       
       if (error) {
+        console.error("Signup error:", error);
         toast.error(error.message);
       } else {
+        console.log("Signup successful:", data);
         toast.success(t('signup.success'));
         if (data.user && data.user.identities && data.user.identities.length === 0) {
           toast.info(t('signup.emailConfirmation'));
