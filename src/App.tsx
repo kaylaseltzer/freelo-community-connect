@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import Index from "./pages/Index";
 import Events from "./pages/Events";
+import EventDetails from "./pages/EventDetails";
 import PrivateEvents from "./pages/PrivateEvents";
 import SavedEvents from "./pages/SavedEvents";
 import Auth from "./pages/Auth";
@@ -28,6 +29,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/events" element={<Events />} />
+              <Route path="/events/:id" element={<EventDetails />} />
               <Route path="/private-events" element={<PrivateEvents />} />
               <Route path="/saved" element={<SavedEvents />} />
               <Route path="/auth" element={<Auth />} />

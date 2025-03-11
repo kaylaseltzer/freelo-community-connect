@@ -18,6 +18,13 @@ export interface EventProps {
   isPrivate?: boolean;
   isNew?: boolean;
   isFeatured?: boolean;
+  description?: string;
+  host?: string;
+  ticketLink?: string;
+  attendeeLimit?: string;
+  ageRange?: string;
+  accessMode?: string;
+  contact?: string;
 }
 
 export const EventCard: React.FC<EventProps> = ({
