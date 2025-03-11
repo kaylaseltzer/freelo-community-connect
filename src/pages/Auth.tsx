@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useLanguage } from '@/context/LanguageContext';
@@ -34,7 +33,6 @@ const Auth: React.FC = () => {
     age18: false,
   });
   
-  // Check if user is already logged in
   useEffect(() => {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
@@ -45,7 +43,6 @@ const Auth: React.FC = () => {
     
     checkSession();
     
-    // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (session) {
@@ -59,7 +56,6 @@ const Auth: React.FC = () => {
     };
   }, [navigate]);
   
-  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -156,11 +152,9 @@ const Auth: React.FC = () => {
         toast.error(error.message);
       } else {
         toast.success(t('signup.success'));
-        // If email confirmation is enabled, show a message
         if (data.user && data.user.identities && data.user.identities.length === 0) {
           toast.info(t('signup.emailConfirmation'));
         } else {
-          // If email confirmation is disabled, redirect to home
           navigate('/');
         }
       }

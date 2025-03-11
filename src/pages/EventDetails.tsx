@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
@@ -40,21 +39,16 @@ const EventDetails: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [event, setEvent] = useState<any>(null);
   
-  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Fetch event data
   useEffect(() => {
     if (id) {
-      // For now, we're getting data from the mock array
-      // In a real app, this would be a Supabase query
       const foundEvent = allEvents.find(e => e.id === id);
       if (foundEvent) {
         setEvent(foundEvent);
       } else {
-        // If event not found, navigate to 404
         console.error(`404 Error: Event with ID ${id} not found`);
         navigate('/not-found');
       }
@@ -71,7 +65,6 @@ const EventDetails: React.FC = () => {
       })
       .catch((error) => console.log('Error sharing', error));
     } else {
-      // Fallback for browsers that don't support sharing
       navigator.clipboard.writeText(window.location.href);
       toast.success(t('event.linkCopied'));
     }
@@ -82,7 +75,6 @@ const EventDetails: React.FC = () => {
   };
 
   const handleSignUp = () => {
-    // In a real app, this would navigate to the ticket link
     if (event?.ticketLink) {
       window.open(event.ticketLink, '_blank');
     } else {
@@ -120,9 +112,7 @@ const EventDetails: React.FC = () => {
       
       <main className="flex-grow pt-24">
         <div className="container-custom py-12">
-          {/* Event Header */}
           <div className="flex flex-col md:flex-row gap-8 mb-12">
-            {/* Event Image */}
             <div className="w-full md:w-1/2 h-[300px] md:h-[400px] rounded-xl overflow-hidden">
               <img 
                 src={event.imageUrl || 'https://images.unsplash.com/photo-1540317580384-e5d43867caa6?q=80&w=500'} 
@@ -131,7 +121,6 @@ const EventDetails: React.FC = () => {
               />
             </div>
             
-            {/* Event Details */}
             <div className="w-full md:w-1/2 flex flex-col">
               <div className="flex flex-wrap gap-2 mb-3">
                 {event.categories && event.categories.map((category: string, index: number) => (
@@ -205,7 +194,6 @@ const EventDetails: React.FC = () => {
             </div>
           </div>
           
-          {/* Event Description */}
           <Card className="mb-8">
             <CardContent className="pt-6">
               <h2 className="text-2xl font-bold mb-4">{t('event.description')}</h2>
@@ -215,7 +203,6 @@ const EventDetails: React.FC = () => {
             </CardContent>
           </Card>
           
-          {/* Event Additional Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <Card>
               <CardContent className="pt-6">
@@ -242,7 +229,7 @@ const EventDetails: React.FC = () => {
                   {event.languages && (
                     <div>
                       <h3 className="font-medium text-muted-foreground flex items-center gap-2">
-                        <Language className="h-4 w-4" /> Languages
+                        <Languages className="h-4 w-4" /> Languages
                       </h3>
                       <p>{event.languages}</p>
                     </div>
@@ -329,7 +316,6 @@ const EventDetails: React.FC = () => {
             </Card>
           </div>
           
-          {/* Event Sign Up Box */}
           <Card className="border-freelo-purple/30 bg-gradient-to-b from-freelo-dark/80 to-freelo-dark/60">
             <CardContent className="pt-6 flex flex-col items-center text-center p-8">
               <h2 className="text-2xl font-bold mb-3">{t('event.interestedPrompt')}</h2>
