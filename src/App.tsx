@@ -15,6 +15,10 @@ import Auth from "./pages/Auth";
 import AddEvent from "./pages/AddEvent";
 import PublishOptions from "./pages/PublishOptions";
 import NotFound from "./pages/NotFound";
+import Profile from "./pages/Profile";
+import AccountSettings from "./pages/AccountSettings";
+import Membership from "./pages/Membership";
+import Tickets from "./pages/Tickets";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +39,10 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/add-event" element={<AddEvent />} />
               <Route path="/publish-options" element={<PublishOptions />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/account-settings" element={<AccountSettings />} />
+              <Route path="/membership" element={<Membership />} />
+              <Route path="/tickets" element={<Tickets />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

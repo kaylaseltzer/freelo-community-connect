@@ -1,16 +1,21 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageToggle from '@/components/ui/LanguageToggle';
-import { Heart, Menu, X, Home, Plus, UserCircle } from 'lucide-react';
+import { Heart, Menu, X, Home, Plus, UserCircle, Ticket, Star, Settings, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { supabase } from '@/integrations/supabase/client';
 
 export const Navbar: React.FC = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [session, setSession] = useState<any>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +25,31 @@ export const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUserEmail(session?.user.email || null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
+      setUserEmail(session?.user.email || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -69,11 +99,58 @@ export const Navbar: React.FC = () => {
             </Link>
             
             <div className="flex items-center gap-3 ml-2">
-              <Link to="/auth">
-                <Button variant="ghost" className="font-medium p-2 h-10 w-10 rounded-full">
-                  <UserCircle className="h-5 w-5" />
-                </Button>
-              </Link>
+              {session ? (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" className="font-medium p-2 h-10 w-10 rounded-full relative">
+                      <UserCircle className="h-5 w-5" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-56 p-0 bg-background border border-border shadow-lg rounded-md">
+                    <div className="flex items-center gap-2 p-3 border-b border-border">
+                      <UserCircle className="h-5 w-5 text-muted-foreground" />
+                      <span className="text-sm font-medium truncate">{userEmail}</span>
+                    </div>
+                    <div className="py-1">
+                      <Link to="/tickets" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted">
+                        <Ticket className="h-4 w-4 text-muted-foreground" />
+                        <span>Tickets (0)</span>
+                      </Link>
+                      <Link to="/saved" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted">
+                        <Heart className="h-4 w-4 text-muted-foreground" />
+                        <span>Liked</span>
+                      </Link>
+                      <Link to="/following" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted">
+                        <UserCircle className="h-4 w-4 text-muted-foreground" />
+                        <span>Following</span>
+                      </Link>
+                      <Link to="/interests" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted">
+                        <Star className="h-4 w-4 text-muted-foreground" />
+                        <span>Interests</span>
+                      </Link>
+                    </div>
+                    <div className="py-1 border-t border-border">
+                      <Link to="/account-settings" className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted">
+                        <Settings className="h-4 w-4 text-muted-foreground" />
+                        <span>Account settings</span>
+                      </Link>
+                      <button 
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted w-full text-left"
+                      >
+                        <LogOut className="h-4 w-4 text-muted-foreground" />
+                        <span>Log out</span>
+                      </button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              ) : (
+                <Link to="/auth">
+                  <Button variant="ghost" className="font-medium p-2 h-10 w-10 rounded-full">
+                    <UserCircle className="h-5 w-5" />
+                  </Button>
+                </Link>
+              )}
               
               <Link to="/add-event">
                 <Button className="bg-gradient-primary hover:shadow-lg transition-all text-white border-none font-medium rounded-full p-2 h-10 w-10">
@@ -132,10 +209,50 @@ export const Navbar: React.FC = () => {
               </Link>
               
               <div className="pt-6 border-t border-border">
-                <Link to="/auth" onClick={toggleMenu} className="flex items-center gap-2 mb-3">
-                  <UserCircle className="h-5 w-5" />
-                  <span>{t('nav.login')}/{t('nav.signup')}</span>
-                </Link>
+                {session ? (
+                  <>
+                    <div className="flex items-center gap-2 mb-4">
+                      <UserCircle className="h-5 w-5" />
+                      <span className="text-sm truncate">{userEmail}</span>
+                    </div>
+                    
+                    <Link to="/profile" onClick={toggleMenu} className="flex items-center gap-2 mb-3">
+                      <UserCircle className="h-5 w-5" />
+                      <span>Profile</span>
+                    </Link>
+                    
+                    <Link to="/tickets" onClick={toggleMenu} className="flex items-center gap-2 mb-3">
+                      <Ticket className="h-5 w-5" />
+                      <span>Tickets</span>
+                    </Link>
+                    
+                    <Link to="/membership" onClick={toggleMenu} className="flex items-center gap-2 mb-3">
+                      <Star className="h-5 w-5" />
+                      <span>Membership</span>
+                    </Link>
+                    
+                    <Link to="/account-settings" onClick={toggleMenu} className="flex items-center gap-2 mb-3">
+                      <Settings className="h-5 w-5" />
+                      <span>Account Settings</span>
+                    </Link>
+                    
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        toggleMenu();
+                      }}
+                      className="flex items-center gap-2 mb-3 bg-transparent border-none p-0 text-white"
+                    >
+                      <LogOut className="h-5 w-5" />
+                      <span>Log out</span>
+                    </button>
+                  </>
+                ) : (
+                  <Link to="/auth" onClick={toggleMenu} className="flex items-center gap-2 mb-3">
+                    <UserCircle className="h-5 w-5" />
+                    <span>{t('nav.login')}/{t('nav.signup')}</span>
+                  </Link>
+                )}
                 
                 <Link to="/add-event" onClick={toggleMenu}>
                   <Button className="w-full bg-gradient-primary hover:shadow-lg transition-all text-white border-none font-medium flex items-center justify-center gap-2">
