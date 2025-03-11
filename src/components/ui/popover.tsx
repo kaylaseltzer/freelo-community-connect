@@ -4,44 +4,7 @@ import * as PopoverPrimitive from "@radix-ui/react-popover"
 
 import { cn } from "@/lib/utils"
 
-const Popover = React.forwardRef<
-  React.ElementRef<typeof PopoverPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Root> & {
-    showOnHover?: boolean;
-  }
->(({ showOnHover, ...props }, ref) => {
-  const [open, setOpen] = React.useState(false);
-  const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const handleMouseEnter = React.useCallback(() => {
-    if (showOnHover) {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-      setOpen(true);
-    }
-  }, [showOnHover]);
-
-  const handleMouseLeave = React.useCallback(() => {
-    if (showOnHover) {
-      timeoutRef.current = setTimeout(() => {
-        setOpen(false);
-      }, 200);
-    }
-  }, [showOnHover]);
-
-  // Modified component to use controlled open state
-  return (
-    <PopoverPrimitive.Root 
-      open={showOnHover ? open : props.open} 
-      onOpenChange={showOnHover ? undefined : props.onOpenChange}
-      {...props}
-    />
-  );
-});
-
-Popover.displayName = "Popover";
+const Popover = PopoverPrimitive.Root
 
 const PopoverTrigger = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Trigger>,
@@ -50,17 +13,24 @@ const PopoverTrigger = React.forwardRef<
     showOnHover?: boolean;
   }
 >(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
-  const context = React.useContext(PopoverContext);
-  
+  const [open, setOpen] = React.useState(false);
+  const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const handleMouseEnter = () => {
-    if (showOnHover && context?.handleMouseEnter) {
-      context.handleMouseEnter();
+    if (showOnHover) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      setOpen(true);
     }
   };
 
   const handleMouseLeave = () => {
-    if (showOnHover && context?.handleMouseLeave) {
-      context.handleMouseLeave();
+    if (showOnHover) {
+      timeoutRef.current = setTimeout(() => {
+        setOpen(false);
+      }, 200);
     }
   };
 
@@ -75,7 +45,8 @@ const PopoverTrigger = React.forwardRef<
       asChild={true}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      data-state={context?.open ? "open" : "closed"}
+      data-state={open ? "open" : "closed"}
+      open={showOnHover ? open : undefined}
     >
       <Comp
         {...(asChild ? {} : props)}
@@ -88,32 +59,29 @@ const PopoverTrigger = React.forwardRef<
 
 PopoverTrigger.displayName = "PopoverTrigger";
 
-// Create a context to share state between components
-type PopoverContextType = {
-  open?: boolean;
-  handleMouseEnter?: () => void;
-  handleMouseLeave?: () => void;
-};
-
-const PopoverContext = React.createContext<PopoverContextType | null>(null);
-
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
     showOnHover?: boolean;
   }
 >(({ className, align = "center", sideOffset = 4, showOnHover = false, ...props }, ref) => {
-  const context = React.useContext(PopoverContext);
+  const contentRef = React.useRef<HTMLDivElement>(null);
   
   const handleMouseEnter = () => {
-    if (showOnHover && context?.handleMouseEnter) {
-      context.handleMouseEnter();
+    if (showOnHover && contentRef.current) {
+      const trigger = contentRef.current.parentElement?.querySelector('[data-state="open"]');
+      if (trigger) {
+        trigger.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      }
     }
   };
   
   const handleMouseLeave = () => {
-    if (showOnHover && context?.handleMouseLeave) {
-      context.handleMouseLeave();
+    if (showOnHover && contentRef.current) {
+      const trigger = contentRef.current.parentElement?.querySelector('[data-state="open"]');
+      if (trigger) {
+        trigger.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+      }
     }
   };
 

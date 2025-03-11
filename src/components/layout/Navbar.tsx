@@ -26,11 +26,13 @@ export const Navbar: React.FC = () => {
   }, []);
   
   useEffect(() => {
+    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUserEmail(session?.user.email || null);
     });
 
+    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
       setUserEmail(session?.user.email || null);
@@ -66,6 +68,7 @@ export const Navbar: React.FC = () => {
     >
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
+          {/* Site Logo and Name */}
           <Link to="/" className="flex items-center gap-2">
             <img 
               src="/lovable-uploads/179cad41-0450-437f-bcc2-5ab390905ce9.png" 
@@ -77,6 +80,7 @@ export const Navbar: React.FC = () => {
             </span>
           </Link>
           
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <LanguageToggle />
             
@@ -100,7 +104,7 @@ export const Navbar: React.FC = () => {
             
             <div className="flex items-center gap-3 ml-2">
               {session ? (
-                <Popover showOnHover={true}>
+                <Popover>
                   <PopoverTrigger 
                     asChild 
                     showOnHover={true} 
@@ -177,6 +181,7 @@ export const Navbar: React.FC = () => {
             </div>
           </div>
           
+          {/* Mobile Menu Button */}
           <button 
             className="md:hidden text-foreground/90 hover:text-freelo-purple"
             onClick={toggleMenu}
@@ -186,6 +191,7 @@ export const Navbar: React.FC = () => {
           </button>
         </div>
         
+        {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="fixed inset-0 top-16 z-50 bg-freelo-dark/95 md:hidden animate-fade-in">
             <div className="flex flex-col p-6 space-y-6">

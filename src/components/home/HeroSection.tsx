@@ -10,12 +10,12 @@ export const HeroSection: React.FC = () => {
   return (
     <section className="relative min-h-[85vh] flex items-center overflow-hidden">
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-freelo-red/50 via-freelo-purple/40 to-freelo-dark/60 z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-freelo-red/40 via-freelo-purple/30 to-freelo-dark/50 z-10"></div>
       
       {/* Hero Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80"
+          src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80"
           alt="Hero Background"
           className="w-full h-full object-cover object-center"
         />
