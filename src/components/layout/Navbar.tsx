@@ -39,13 +39,8 @@ export const Navbar: React.FC = () => {
     >
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
-          {/* Logo and Site Name */}
+          {/* Site Name */}
           <Link to="/" className="flex items-center gap-2">
-            <img 
-              src="/lovable-uploads/28ea0588-0f4f-4e6c-b5e8-20c03fdfa9ed.png" 
-              alt="Freelo Logo" 
-              className="h-10 w-10"
-            />
             <span className="font-heading font-bold text-xl text-white">
               Freelo
             </span>
@@ -75,9 +70,8 @@ export const Navbar: React.FC = () => {
             
             <div className="flex items-center gap-3 ml-2">
               <Link to="/auth">
-                <Button variant="ghost" className="font-medium flex items-center gap-2">
+                <Button variant="ghost" className="font-medium p-2 h-10 w-10 rounded-full">
                   <UserCircle className="h-5 w-5" />
-                  {t('nav.login')}
                 </Button>
               </Link>
               
