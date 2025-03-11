@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useLanguage } from '@/context/LanguageContext';
@@ -11,9 +11,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from 'sonner';
 import { Eye, EyeOff, Lock, Mail, User } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Auth: React.FC = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<string>("login");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -31,6 +33,31 @@ const Auth: React.FC = () => {
     agreeTerms: false,
     age18: false,
   });
+  
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        navigate('/');
+      }
+    };
+    
+    checkSession();
+    
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session) {
+          navigate('/');
+        }
+      }
+    );
+    
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [navigate]);
   
   // Scroll to top on page load
   useEffect(() => {
@@ -64,7 +91,7 @@ const Auth: React.FC = () => {
     setShowPassword(!showPassword);
   };
   
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!loginData.email || !loginData.password) {
@@ -74,14 +101,27 @@ const Auth: React.FC = () => {
     
     setLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      toast.success(t('login.success'));
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: loginData.email,
+        password: loginData.password,
+      });
+      
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success(t('login.success'));
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error(t('login.error'));
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
   
-  const handleSignupSubmit = (e: React.FormEvent) => {
+  const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!signupData.name || !signupData.email || !signupData.password) {
@@ -101,11 +141,35 @@ const Auth: React.FC = () => {
     
     setLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      toast.success(t('signup.success'));
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: signupData.email,
+        password: signupData.password,
+        options: {
+          data: {
+            name: signupData.name
+          }
+        }
+      });
+      
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success(t('signup.success'));
+        // If email confirmation is enabled, show a message
+        if (data.user && data.user.identities && data.user.identities.length === 0) {
+          toast.info(t('signup.emailConfirmation'));
+        } else {
+          // If email confirmation is disabled, redirect to home
+          navigate('/');
+        }
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      toast.error(t('signup.error'));
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
