@@ -68,13 +68,8 @@ export const Navbar: React.FC = () => {
     >
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
-          {/* Site Logo and Name */}
+          {/* Site Name */}
           <Link to="/" className="flex items-center gap-2">
-            <img 
-              src="/lovable-uploads/179cad41-0450-437f-bcc2-5ab390905ce9.png" 
-              alt="Freelo Logo" 
-              className="w-8 h-8"
-            />
             <span className="font-heading font-bold text-xl text-white">
               Freelo
             </span>
